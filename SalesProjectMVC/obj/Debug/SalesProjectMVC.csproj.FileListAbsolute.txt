@@ -81,3 +81,4 @@ C:\Users\Madhu Krishna\source\repos\SalesProjectMVC\SalesProjectMVC\obj\Debug\Sa
 C:\Users\Madhu Krishna\source\repos\SalesProjectMVC\SalesProjectMVC\obj\Debug\SalesProjectMVC.csproj.CopyComplete
 C:\Users\Madhu Krishna\source\repos\SalesProjectMVC\SalesProjectMVC\obj\Debug\SalesProjectMVC.dll
 C:\Users\Madhu Krishna\source\repos\SalesProjectMVC\SalesProjectMVC\obj\Debug\SalesProjectMVC.pdb
+C:\Users\Madhu Krishna\source\repos\SalesProjectMVC\SalesProjectMVC\obj\Debug\SalesProjectMVC.csprojAssemblyReference.cache

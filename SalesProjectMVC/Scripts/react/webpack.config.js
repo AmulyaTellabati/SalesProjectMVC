@@ -6,6 +6,7 @@ module.exports = {
         path: __dirname + "/dist",
         filename: "bundle.js"
     },
+    externals: ['axios'],
     watch: true,
     module: {
         rules: [{
