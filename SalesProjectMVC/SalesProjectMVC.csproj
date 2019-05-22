@@ -134,8 +134,11 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\ProductsController.cs" />
+    <Compile Include="Controllers\ProductController.cs" />
+    <Compile Include="Controllers\SalesController.cs" />
+    <Compile Include="Controllers\StoresController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -209,8 +212,15 @@
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\react\dist\bundle.js" />
     <Content Include="Scripts\react\index.jsx" />
-    <Content Include="Scripts\react\Modal.js" />
+    <Content Include="Scripts\react\Modals\AppRedirect.jsx" />
+    <Content Include="Scripts\react\Modals\InputForm.jsx" />
+    <Content Include="Scripts\react\Modals\ModalCreate.jsx" />
     <Content Include="Scripts\react\Modals\ModalDelete.jsx" />
+    <Content Include="Scripts\react\Pages\Customer.jsx" />
+    <Content Include="Scripts\react\Pages\MenuNav.jsx" />
+    <Content Include="Scripts\react\Pages\Products.jsx" />
+    <Content Include="Scripts\react\Pages\Sales.jsx" />
+    <Content Include="Scripts\react\Pages\Stores.jsx" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -225,12 +235,13 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Scripts\react\package-lock.json" />
     <Content Include="Scripts\react\package.json" />
-    <Content Include="Views\Home\Sales.cshtml" />
-    <Content Include="Views\Home\Stores.cshtml" />
-    <Content Include="Views\Home\Customers.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Customer\" />
+    <Folder Include="Views\Product\" />
+    <Folder Include="Views\Sales\" />
+    <Folder Include="Views\Stores\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

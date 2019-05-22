@@ -22,41 +22,24 @@ class ModalDelete extends Component {
     handleSubmit(e) {
 
         let params = e.target.getAttribute('data-userid');
-        console.log(params);
-        //axios.get("/home/GetProductData").then(response => {
-        //    console.log(response.data);
-        //    this.setState({
-        //        ProductData: response.data
-        //    });
-        //});
+        let path = this.props.pathname;
 
-        axios({
-            method: 'delete',
-            responseType: 'json',
-            url: `/Products/Delete/${params}`,
-        })
-            .then((response) => {
-                console.log(response.data.result);
-                this.handleClose();
-                console.log(response.data.result);
-                this.props.onUserDeleted(response.data.result);
-                this.props.socket.emit('delete', response.data.result);
-            })
-            .catch((err) => {
+        let url = `/` + path+`/Delete`+path+`/${params}`;
+
+        axios.get(url).then(response => {
+            this.handleClose();
+            this.props.onUserDeleted(params);
+        }).catch((err) => {
                 this.handleClose();
                 throw err;
-            });
+         });
     }
 
     render() {
         return (
             <Modal
                 trigger={<Button onClick={this.handleOpen} color={this.props.buttonColor}><i className={this.props.buttonIcon}></i>{this.props.buttonTriggerTitle}</Button>}
-                open={this.state.modalOpen}
-                onClose={this.handleClose}
-                dimmer='inverted'
-                size='tiny'
-            >
+                open={this.state.modalOpen} pathname={this.props.pathname} onClose={this.handleClose} size='tiny'>
                 <Modal.Header>{this.props.headerTitle}</Modal.Header>
                 <Modal.Content>
                     <p>Are you sure you want to delete?</p>
