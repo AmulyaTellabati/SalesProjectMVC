@@ -31,18 +31,18 @@ class Customer extends React.Component {
         });
     }
 
-    handleUserAdded(user) {
+    handleUserAdded(cust) {
         let CustomerData = this.state.CustomerData.slice();
-        CustomerData.push(user);
+        CustomerData.push(cust);
         this.setState({ CustomerData: CustomerData });
     }
 
-    handleUserUpdated(user) {
+    handleUserUpdated(userid,cust) {
         let CustomerData = this.state.CustomerData.slice();
-        for (let i = 0, n = users.length; i < n; i++) {
-            if (CustomerData[i]._id === user._id) {
-                CustomerData[i].name = user.name;
-                CustomerData[i].price = user.price;
+        for (let i = 0, n = CustomerData.length; i < n; i++) {
+            if (CustomerData[i].Id === userid) {
+                CustomerData[i].Name = cust.Name;
+                CustomerData[i].Address = cust.Address;
 
                 break; // Stop this loop, we found it!
             }

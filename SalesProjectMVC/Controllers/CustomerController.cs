@@ -17,6 +17,7 @@ namespace SalesProjectMVC.Controllers
 
         public JsonResult GetCustomerData()
         {
+            db.Configuration.ProxyCreationEnabled = false;
             var Pdata = db.Customers.OrderBy(a => a.Id).ToList();
             return new JsonResult { Data = Pdata, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
@@ -30,18 +31,21 @@ namespace SalesProjectMVC.Controllers
 
         public JsonResult GetCustomer(int? id)
         {
+            db.Configuration.ProxyCreationEnabled = false;
             Customer Customer = db.Customers.Find(id);
 
             return new JsonResult { Data = Customer, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
         [Route("Customer/EditCustomer")]
         [HttpPost]
-        public JsonResult EditCustomer(int id, Customer Customer)
+        public JsonResult EditCustomer(Customer customer)
         {
-
-            Customer EXproducts = db.Customers.Find(id);
-            EXproducts.Name = Customer.Name;
-            EXproducts.Address = Customer.Address;
+            var v = db.Customers.Where(a => a.Id == customer.Id).FirstOrDefault();
+            if (v != null)
+            {
+                v.Name = customer.Name;
+                v.Address = customer.Address;
+            }
             try
             {
                 db.SaveChanges();

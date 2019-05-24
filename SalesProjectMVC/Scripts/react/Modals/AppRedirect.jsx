@@ -19,6 +19,9 @@ const GlobalStyle = createGlobalStyle`
     padding: 0;
     margin: 0;
   }
+.ui.form .field{
+ max-width:75%;
+}
 `
 
 const App = () => {
@@ -33,7 +36,7 @@ const App = () => {
                 <Route path="/Products" component={Products} />
                 <Route path="/Customers" component={Customer} />
                 <Route path="/Stores" component={Stores} />
-                <Route path="/Sales" component={Sales} />
+                < Route path = "/Sales" component = { Sales } />
 
                   < Redirect to = "/Products" />
             </Switch>
@@ -43,3 +46,4 @@ const App = () => {
 
 export default App
 
+    

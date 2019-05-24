@@ -35,14 +35,16 @@ class Products extends React.Component {
         let ProductData = this.state.ProductData.slice();
         ProductData.push(user);
         this.setState({ ProductData: ProductData });
+        // this.handleClose();
     }
 
-    handleUserUpdated(user) {
+    handleUserUpdated(userid,user) {
+        debugger;
         let ProductData = this.state.ProductData.slice();
-        for (let i = 0, n = users.length; i < n; i++) {
-            if (ProductData[i]._id === user._id) {
-                ProductData[i].name = user.name;
-                ProductData[i].price = user.price;
+        for (let i = 0, n = ProductData.length; i < n; i++) {
+            if (ProductData[i].Id === userid) {
+                ProductData[i].Name = user.Name;
+                ProductData[i].Price = user.Price;
 
                 break; // Stop this loop, we found it!
             }

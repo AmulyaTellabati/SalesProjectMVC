@@ -16,7 +16,9 @@
     "babel-preset-env": "^1.7.0",
     "babel-preset-react": "^6.24.1",
     "create-react-class": "^15.6.3",
+    "css-loader": "^2.1.1",
     "react": "^16.8.6",
+    "react-datepicker": "^2.5.0",
     "react-dom": "^16.8.6",
     "react-router-dom": "^5.0.0",
     "react-tag-input": "^6.4.0",
@@ -26,5 +28,7 @@
     "webpack": "^4.5.0",
     "webpack-cli": "^3.3.2"
   },
-  "dependencies": {}
+  "dependencies": {
+    "semantic-ui-calendar-react": "^0.15.0"
+  }
 }

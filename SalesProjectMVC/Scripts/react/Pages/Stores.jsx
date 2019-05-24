@@ -37,12 +37,12 @@ class Stores extends React.Component {
         this.setState({ StoreData: StoreData });
     }
 
-    handleUserUpdated(user) {
+    handleUserUpdated(userid,user) {
         let StoreData = this.state.StoreData.slice();
-        for (let i = 0, n = users.length; i < n; i++) {
-            if (StoreData[i]._id === user._id) {
-                StoreData[i].name = user.name;
-                StoreData[i].price = user.price;
+        for (let i = 0, n = StoreData.length; i < n; i++) {
+            if (StoreData[i].Id === userid) {
+                StoreData[i].Name = user.Name;
+                StoreData[i].Address = user.Address;
 
                 break; // Stop this loop, we found it!
             }

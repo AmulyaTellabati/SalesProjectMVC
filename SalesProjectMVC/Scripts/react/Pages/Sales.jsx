@@ -2,7 +2,7 @@
 import ReactDOM from 'react-dom';
 
 import ModalDelete from '../Modals/ModalDelete.jsx';
-import ModalCreate from '../Modals/ModalCreate.jsx';
+import ModalCreate from '../Modals/SaleModal.jsx';
 
 class Sales extends React.Component {
     constructor() {
@@ -14,9 +14,6 @@ class Sales extends React.Component {
         this.handleUserUpdated = this.handleUserUpdated.bind(this);
         this.handleUserDeleted = this.handleUserDeleted.bind(this);
     }
-
-
-
     componentDidMount() {
         axios.get("/Sales/GetSaleData").then(response => {
             console.log(response.data);
@@ -32,12 +29,14 @@ class Sales extends React.Component {
     }
 
     handleUserAdded(user) {
+        debugger;
         let SalesData = this.state.SalesData.slice();
         SalesData.push(user);
         this.setState({ SalesData: SalesData });
     }
 
     handleUserUpdated(user) {
+        debugger;
         let SalesData = this.state.SalesData.slice();
         for (let i = 0, n = users.length; i < n; i++) {
             if (SalesData[i]._id === user._id) {
@@ -56,7 +55,7 @@ class Sales extends React.Component {
         this.setState({ SalesData: SalesData });
     }
     render() {
-
+        console.log(this.state.SalesData);
         return (
             <div className="ui container">
 
@@ -83,14 +82,15 @@ class Sales extends React.Component {
                         <tbody>
                             {
                                 this.state.SalesData.map((se, index) => {
-                                    return <tr key={index}><td> {se.Name}</td><td>{se.Price}</td><td> <ModalCreate
+                                    
+                                    return <tr key={index}><td> {se.Customer.Name}</td><td>{se.Product.Name}</td><td>{se.Store.Name}</td><td>{new Date(parseInt(se.DateSold.substring(6, 19))).toDateString()}</td><td> <ModalCreate
                                         headerTitle='Edit Sale'
                                         buttonTriggerTitle='Edit' buttonIcon="edit outline icon"
                                         buttonSubmitTitle='Save'
                                         buttonColor='yellow'
                                         userID={se.Id}
                                         onUserUpdated={this.handleUserUpdated} /> </td><td><ModalDelete
-                                            headerTitle='Delete Sale' userID={se.Id}
+                                            headerTitle='Delete Sale' userID={se.Id} pathname='Sales'
                                             buttonTriggerTitle='Delete' buttonIcon="trash alternate outline icon"
                                             buttonColor='red' onUserDeleted={this.handleUserDeleted} /></td></tr>;
                                 })

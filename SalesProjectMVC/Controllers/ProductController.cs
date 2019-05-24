@@ -24,30 +24,29 @@ namespace SalesProjectMVC.Controllers
         }
         public JsonResult GetProductData()
         {
+            db.Configuration.ProxyCreationEnabled = false;
             var Pdata = db.Products.OrderBy(a => a.Id).ToList();
+            
             return new JsonResult { Data = Pdata, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
 
 
         public JsonResult GetProduct(int? id)
         {
+            db.Configuration.ProxyCreationEnabled = false;
             Product product = db.Products.Find(id);
 
             return new JsonResult { Data = product, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
         [Route("Product/EditProduct")]
         [HttpPost]
-        public JsonResult EditProduct(int id, Product product)
+        public JsonResult EditProduct(Product product)
         {
-
-            Product EXproducts = db.Products.Find(id);
-            EXproducts.Name = product.Name;
-            EXproducts.Price = product.Price;
-            //var updatedProduct = UpdateExistingResource(EXproducts, product);
-            // db.Entry(product).State = EntityState.Modified;
-
-            //db.Products.
-            db.Entry(product);
+            var v = db.Products.Where(a => a.Id == product.Id).FirstOrDefault();
+            if (v != null) {
+                v.Name = product.Name;
+                v.Price = product.Price;
+            }
             try
             {
                 db.SaveChanges();

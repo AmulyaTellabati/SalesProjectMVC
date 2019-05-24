@@ -4,6 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Data.Entity;
+using System.Net;
+using Newtonsoft.Json;
 
 namespace SalesProjectMVC.Controllers
 {
@@ -15,10 +18,23 @@ namespace SalesProjectMVC.Controllers
             return View();
         }
 
-        public JsonResult GetStoreData()
+        public JsonResult GetSaleData()
         {
-            var Pdata = db.Sales.OrderBy(a => a.Id).ToList();
+            db.Configuration.ProxyCreationEnabled = false;
+            var storedata = db.Sales.Include(r => r.Store).Include(r => r.Customer).Include(r => r.Product).AsEnumerable().Select(r => SaleResult(r));
+            var Pdata = storedata.ToList();
             return new JsonResult { Data = Pdata, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+        }
+        private Object SaleResult(Sale sale)
+        {
+            return new
+            {
+                sale.Id,
+                Store = new { sale.Store.Id, sale.Store.Name },
+                Customer = new { sale.Customer.Id, sale.Customer.Name },
+                Product = new { sale.Product.Id, sale.Product.Name },
+                sale.DateSold
+            };
         }
         public JsonResult DeleteSales(int? id)
         {
@@ -37,7 +53,7 @@ namespace SalesProjectMVC.Controllers
         }
         [Route("Sales/EditSale")]
         [HttpPost]
-        public JsonResult EditStore(int id, Sale Sale)
+        public JsonResult EditSale(int id, Sale Sale)
         {
 
             Sale EXproducts = db.Sales.Find(id);
@@ -56,18 +72,25 @@ namespace SalesProjectMVC.Controllers
         [HttpPost]
         public JsonResult AddSale(Sale Sale)
         {
+          
             db.Sales.Add(Sale);
             try
             {
                 db.SaveChanges();
+                db.Entry(Sale).Reference(r => r.Store).Load();
+                db.Entry(Sale).Reference(r => r.Customer).Load();
+                db.Entry(Sale).Reference(r => r.Product).Load();
+               
             }
+            
+
             catch (Exception e)
             {
                 return new JsonResult { Data = e, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
             }
 
 
-            return new JsonResult { Data = "Updated", JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+            return new JsonResult { Data = SaleResult(Sale), JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
     }
 }

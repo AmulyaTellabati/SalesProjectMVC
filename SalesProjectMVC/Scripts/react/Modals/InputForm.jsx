@@ -84,17 +84,14 @@ class InputForm extends Component {
 
         // Acknowledge that if the user id is provided, we're updating via PUT
         // Otherwise, we're creating a new data via POST
-       // const method = this.props.userID ? 'PUT' : 'POST';
         const params = this.props.userID ? this.props.userID : '';
-       // const postdata = ''; const posturl = '';const addData ='';
         if (this.props.pathname == 'Product') {
-            const postdata = this.props.userID ? { id: this.props.userID, user } : user;
-            const posturl = this.props.userID ? '/Product/EditProduct' : '/Product/AddProduct';
+            const posturl = this.props.userID ? `/Product/EditProduct/${params}` : '/Product/AddProduct';
 
             axios({
                 method: 'POST',
                 url: posturl,
-                data: postdata,
+                data: user,
             })
                 .then((response) => {
                     this.setState({
@@ -110,7 +107,7 @@ class InputForm extends Component {
                         this.props.onUserAdded(user);
                     }
                     else {
-                        this.props.onUserUpdated(user);
+                        this.props.onUserUpdated(params,user);
                     }
 
                 })
@@ -132,13 +129,12 @@ class InputForm extends Component {
                 });
         }
         if (this.props.pathname == 'Customer' || this.props.pathname == 'Stores') {
-            const postdata = this.props.userID ? { id: this.props.userID, cust } : cust;
-            const posturl = this.props.userID ? '/' + this.props.pathname + '/Edit' + this.props.pathname : '/' + this.props.pathname + '/Add' + this.props.pathname;
+            const posturl = this.props.userID ? '/' + this.props.pathname + '/Edit' + this.props.pathname+'/'+`${params}` : '/' + this.props.pathname + '/Add' + this.props.pathname;
  
             axios({
                 method: 'POST',
                 url: posturl,
-                data: postdata,
+                data: cust,
             })
                 .then((response) => {
                     this.setState({
@@ -154,7 +150,7 @@ class InputForm extends Component {
                         this.props.onUserAdded(cust);
                     }
                     else {
-                        this.props.onUserUpdated(cust);
+                        this.props.onUserUpdated(params,cust);
                     }
 
                 })

@@ -29,11 +29,11 @@ const NavBar = ({ history }) => {
           active={currentLocation === '/Stores'}
           onClick={() => navigatePage('/Stores')}
         />
-        <Menu.Item
-          name="Sales"
-          active={currentLocation === '/Sales'}
-          onClick={() => navigatePage('/Sales')}
-        />
+              < Menu.Item
+                  name="Sales"
+                  active={currentLocation === '/Sales'}
+                  onClick={() => navigatePage('/Sales')}
+              />
       </Menu>
     </Segment>
   )
