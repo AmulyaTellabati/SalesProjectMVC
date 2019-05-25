@@ -28,6 +28,13 @@ namespace SalesProjectMVC.Controllers
             db.SaveChanges();
             return new JsonResult { Data = "Deleted", JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
+        public JsonResult CustCount() {
+            db.Configuration.ProxyCreationEnabled = false;
+            var CustCt = db.Customers;
+            return new JsonResult { Data = CustCt.Count(), JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+
+        }
+        
 
         public JsonResult GetCustomer(int? id)
         {

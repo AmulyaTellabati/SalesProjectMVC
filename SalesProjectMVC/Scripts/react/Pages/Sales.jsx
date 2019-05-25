@@ -1,6 +1,6 @@
 ﻿import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-
+import { Pagination } from 'semantic-ui-react';
 import ModalDelete from '../Modals/ModalDelete.jsx';
 import ModalCreate from '../Modals/SaleModal.jsx';
 
@@ -29,25 +29,31 @@ class Sales extends React.Component {
     }
 
     handleUserAdded(user) {
-        debugger;
         let SalesData = this.state.SalesData.slice();
         SalesData.push(user);
         this.setState({ SalesData: SalesData });
     }
 
-    handleUserUpdated(user) {
-        debugger;
+    handleUserUpdated(userid,user) {
         let SalesData = this.state.SalesData.slice();
-        for (let i = 0, n = users.length; i < n; i++) {
-            if (SalesData[i]._id === user._id) {
-                SalesData[i].name = user.name;
-                SalesData[i].price = user.price;
+        for (let i = 0, n = SalesData.length; i < n; i++) {
+            if (SalesData[i].Id === userid) {
+                SalesData[i].Product.Id = user.Product.Id;
+                SalesData[i].Product.Name = user.Product.Name;
+                SalesData[i].Store.Id = user.Store.Id;
+                SalesData[i].Store.Name = user.Store.Name;
+                SalesData[i].Customer.Id = user.Customer.Id;
+                SalesData[i].Customer.Name = user.Customer.Name;
+                SalesData[i].DateSold = user.DateSold;
 
                 break; // Stop this loop, we found it!
             }
         }
         this.setState({ SalesData: SalesData });
     }
+
+
+   
 
     handleUserDeleted(id) {
         let SalesData = this.state.SalesData.slice();
@@ -97,7 +103,7 @@ class Sales extends React.Component {
                             }
                         </tbody>
                     </table>
-
+                    <Pagination activePage='1' boundaryRange={0} size='mini' floated='right' siblingRange={2} totalPages='2' />
                 </div>
 
 

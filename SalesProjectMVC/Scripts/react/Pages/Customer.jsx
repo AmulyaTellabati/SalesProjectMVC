@@ -1,6 +1,6 @@
 ﻿import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-
+import { Pagination } from 'semantic-ui-react';
 import ModalDelete from '../Modals/ModalDelete.jsx';
 import ModalCreate from '../Modals/ModalCreate.jsx';
 
@@ -96,7 +96,7 @@ class Customer extends React.Component {
                             }
                         </tbody>
                     </table>
-
+                    <Pagination activePage='1' boundaryRange={0} size='mini' floated='right' siblingRange={2} totalPages='2' />
                 </div>
 
 

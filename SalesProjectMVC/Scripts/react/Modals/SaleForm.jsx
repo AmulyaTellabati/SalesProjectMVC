@@ -2,10 +2,8 @@
 import { Message, Button, Form, Dropdown } from 'semantic-ui-react';
 import axios from 'axios';
 import DatePicker from "react-datepicker";
-import "../node_modules/react-datepicker/dist/react-datepicker.css";
 
 import { DateInput } from 'semantic-ui-calendar-react';
-import SelectedSale from '../Modals/SelectedSale.jsx';
 
 
 class SaleForm extends Component {
@@ -20,16 +18,17 @@ class SaleForm extends Component {
             products: [],
             customers: [],
             stores: [],
-            date: '', pvalue: 'select', cvalue: 'select', svalue: 'select',
-            Product: '', Customer: '', Store: '', ProductN: '', CustomerN: '', StoreN: '',
+            startdate: '', pvalue: 'select', cvalue: 'select', svalue: 'select',
+            Product: '', Customer: '', Store: '', DateSold:'',
             validationError: ''
         }
         this.handleInputChange = this.handleInputChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);       
+        this.handleSubmit = this.handleSubmit.bind(this);   
+        this.handleChange = this.handleChange.bind(this);
     }
 
     componentDidMount() {
-        axios.get("/Product/GetProductData")
+        axios.get("/Product/GetProductData/1")
             .then((response) => {
                 this.setState({
                     products: response.data
@@ -53,11 +52,14 @@ class SaleForm extends Component {
         console.log("componentWillMountIF: " + this.props.userID);
         const path = this.props.pathname;
         if (this.props.userID) {
-            axios.get(`/Product/GetProduct/${this.props.userID}`)
+            axios.get(`/Sales/GetSale/${this.props.userID}`)
                 .then((response) => {
                     this.setState({
-                        Name: response.data.Name,
-                        Price: response.data.Price,
+                        pvalue: response.data.Product.Id,
+                        cvalue: response.data.Customer.Id,
+                        svalue: response.data.Store.Id,
+                        date:response.data.DateSold,
+                        
                     });
                 })
                 .catch((err) => { console.log(err); });
@@ -70,35 +72,30 @@ class SaleForm extends Component {
         const Name = target.name;
        
 
-        this.setState({ [Name]: val.split(' ')[0] });
+        this.setState({ [Name]: val });
         if (Name == 'Product') {
-            this.setState({ pvalue: val, ProductN: val.split(' ')[1]});
+            this.setState({ pvalue: val });
         }
         if (Name == 'Customer') {
-            this.setState({ cvalue: val, CustomerN: val.split(' ')[1] });
+            this.setState({ cvalue: val });
         }
         if (Name == 'Store') {
-            this.setState({ svalue: val, StoreN: val.split(' ')[1] });
+            this.setState({ svalue: val });
         }
     }
 
     handleChange(e) {
-        this.setState({
-            startDate: date
-        });
+        var target = e;
+        this.setState({startDate: target});
     }
 
     handleSubmit(e) {
-        debugger;
         e.preventDefault();
         const sale = {
             ProductId: this.state.Product,
-            ProductName:this.state.ProductN,
             CustomerId: this.state.Customer,
-            CustomerName: this.state.CustomerN,
-            StoreName:this.state.StoreN,
             StoreId: this.state.Store,
-            Date:this.state.date
+            DateSold: this.state.startDate
 
         }
         const params = this.props.userID ? this.props.userID : '';
@@ -116,7 +113,7 @@ class SaleForm extends Component {
                     this.setState({ Product: '', Customer: '', Store:''});
                     this.props.onUserAdded(response.data);
                 }
-                else { this.props.onUserUpdated(params, sale); }
+                else { this.props.onUserUpdated(params, response.data); }
             })
             .catch((err) => {
                 if (err.response) {
@@ -144,8 +141,7 @@ class SaleForm extends Component {
                         <option value='Select' key='1'>--Select--</option>
                         {
                             this.state.products.map(function (item) {
-                                var ex = item.Id +" "+ item.Name;
-                                return <option value={ex} key={item.Id}>{item.Name}</option>;
+                                return <option value={item.Id} key={item.Id}>{item.Name}</option>;
                             })
                         }
                     </select><br /></div>
@@ -155,8 +151,7 @@ class SaleForm extends Component {
                         <option value='Select' key='1'>--Select--</option>
                         {
                             this.state.customers.map(function (item) {
-                                var ex = item.Id + " " + item.Name;
-                                return <option value={ex} key={item.Id}>{item.Name}</option>;
+                                return <option value={item.Id} key={item.Id}>{item.Name}</option>;
                             })
                         }
                     </select><br /></div>
@@ -166,15 +161,11 @@ class SaleForm extends Component {
                         <option value='Select' key='1'>--Select--</option>
                         {
                             this.state.stores.map(function (item) {
-                                var ex = item.Id + " " + item.Name;
-                                return <option value={ex} key={item.Id}>{item.Name}</option>;
+                                return <option value={item.Id} key={item.Id}>{item.Name}</option>;
                             })
                         }
-                    </select><br /></div> 
-                <DatePicker
-                    selected={this.state.startDate}
-                    onChange={this.handleChange}
-                />
+                    </select><br/></div> 
+                <DatePicker selected={this.state.startDate} onChange={this.handleChange} value={this.state.startDate}/>
 
                 <Message success color='green' header='Updated!' content={formSuccessMessage} />
                 <Message warning color='yellow' header='Woah!' content={formErrorMessage} />

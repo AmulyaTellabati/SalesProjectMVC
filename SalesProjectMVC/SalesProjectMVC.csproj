@@ -216,9 +216,9 @@
     <Content Include="Scripts\react\Modals\InputForm.jsx" />
     <Content Include="Scripts\react\Modals\ModalCreate.jsx" />
     <Content Include="Scripts\react\Modals\ModalDelete.jsx" />
+    <Content Include="Scripts\react\Modals\Pagination.jsx" />
     <Content Include="Scripts\react\Modals\SaleForm.jsx" />
     <Content Include="Scripts\react\Modals\SaleModal.jsx" />
-    <Content Include="Scripts\react\Modals\SelectedSale.jsx" />
     <Content Include="Scripts\react\Pages\Customer.jsx" />
     <Content Include="Scripts\react\Pages\MenuNav.jsx" />
     <Content Include="Scripts\react\Pages\Products.jsx" />

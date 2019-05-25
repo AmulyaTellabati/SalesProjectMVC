@@ -22,15 +22,22 @@ namespace SalesProjectMVC.Controllers
             db.SaveChanges();
             return new JsonResult { Data = "Deleted", JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
-        public JsonResult GetProductData()
+        public JsonResult GetProductData(int? id)
         {
             db.Configuration.ProxyCreationEnabled = false;
             var Pdata = db.Products.OrderBy(a => a.Id).ToList();
             
-            return new JsonResult { Data = Pdata, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+            var paginateddata=Pdata.Skip(((int)id - 1) * 10).Take(10);
+            return new JsonResult { Data = paginateddata, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
 
+        public JsonResult ProductCount()
+        {
+            db.Configuration.ProxyCreationEnabled = false;
+            var PdtCt = db.Products;
+            return new JsonResult { Data = PdtCt.Count(), JsonRequestBehavior = JsonRequestBehavior.AllowGet };
 
+        }
         public JsonResult GetProduct(int? id)
         {
             db.Configuration.ProxyCreationEnabled = false;
